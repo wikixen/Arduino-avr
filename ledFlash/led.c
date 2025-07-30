@@ -1,14 +1,18 @@
-#include <avr/io.h>
 #include <util/delay.h>
 
+#define PORTB *((volatile byte*)0x25)
+#define DDRB *((volatile byte *)0x24)
+
+typedef uint8_t byte;
+
 int main(void) {
-	DDRB = DDRB | (1 << DDB5);
+	 DDRB = 32;
 
 	while(1) {
-		PORTB = PORTB | (1 << PORTB5);
-		_delay_ms(1000);
-		PORTB = PORTB & ~(1 << PORTB5);
-		_delay_ms(1000);
+		PORTB = 32;
+		_delay_ms(500);
+		PORTB = 0;
+		_delay_ms(500);
 	}
 }
 
