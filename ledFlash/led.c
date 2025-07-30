@@ -1,9 +1,8 @@
+/*
+* led.c flashes the built-in arduino led
+*/
 #include <util/delay.h>
-
-#define PORTB *((volatile byte*)0x25)
-#define DDRB *((volatile byte *)0x24)
-
-typedef uint8_t byte;
+#include <myports.h>
 
 int main(void) {
 	 DDRB = 32;
