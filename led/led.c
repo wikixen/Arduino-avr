@@ -2,7 +2,7 @@
 * led.c flashes the built-in arduino led
 */
 #include <util/delay.h>
-#include <myports.h>
+#include </home/bennyhernandez/Code/arduino_avr/myports.h>
 
 int main(void) {
 	 DDRB = 32;

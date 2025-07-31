@@ -1,3 +1,5 @@
+#include <stdint.h>
+
 #define PORTB *((volatile byte *)0x25)
 #define DDRB *((volatile byte *)0x24)
 
