@@ -10,9 +10,7 @@ int main(void) {
 
   while (1)
   {
-    PORTD |= (1 << 3);
     _delay_ms(500);
-    PORTD &= ~(1 << 3);
-    _delay_ms(500);
+    PORTD ^= (1 << 3);
   }
 }

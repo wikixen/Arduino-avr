@@ -5,13 +5,11 @@
 #include </home/bennyhernandez/Code/arduino_avr/myports.h>
 
 int main(void) {
-	 DDRB = 32;
+	 DDRB |= (1 << 5);
 
 	while(1) {
-		PORTB = 32;
 		_delay_ms(500);
-		PORTB = 0;
-		_delay_ms(500);
+		PORTB ^= (1 << 5);
 	}
 }
 
