@@ -1,6 +1,4 @@
 // switch.c turns on led via button, both of which are on a breadboard
-
-#include <util/delay.h>
 #include </home/bennyhernandez/Code/arduino_avr/myports.h>
 
 int main(void) {
