@@ -1,5 +1,5 @@
 // switch.c turns on led via button, both of which are on a breadboard
-#include </home/bennyhernandez/Code/arduino_avr/myports.h>
+#include <avr/io.h>
 
 int main(void) {
   DDRD |= (1 << 3); // LED Output
