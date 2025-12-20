@@ -8,7 +8,7 @@ int main(void) {
 	 DDRB |= (1 << 5);
 
 	while(1) {
-		_delay_ms(500);
+		_delay_ms(100);
 		PORTB ^= (1 << 5);
 	}
 }
