@@ -5,7 +5,7 @@
 #include <avr/io.h>
 
 int main(void) {
-	 DDRB |= (1 << 5);
+	DDRB |= (1 << 5); // Set PB5 as output; This is the pin for the built-in MCU LED
 
 	while(1) {
 		_delay_ms(100);

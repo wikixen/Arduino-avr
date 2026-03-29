@@ -7,15 +7,14 @@
 #include <avr/io.h>
 
 int main(void) {
-  // LEDs
+  // Sets PD3, PD4 & PD5 as outputs 
   DDRD |= (1 << 3) | (1 << 4) | (1 << 5);
-  // Btn
-  DDRD &= ~(1 << 2);
-  PORTD |= (1 << 2);
+  
+  DDRD &= ~(1 << 2); // Ensures PD2 is an input
 
   while (1)
   {
-    if (~PIND & (1<<2))
+    if (PIND & (1<<2))
     {
       PORTD |= (1 << 5);
       PORTD &= ~((1 << 3) | (1 << 4));

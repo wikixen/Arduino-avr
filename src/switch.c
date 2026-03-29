@@ -2,15 +2,12 @@
 #include <avr/io.h>
 
 int main(void) {
-  DDRD |= (1 << 3); // LED Output
-
-  // Btn input
-  DDRD &= ~(1 << 2); 
-  PORTD |= (1 << 2);
+  DDRD |= (1 << 3); // Desginates PD3 as output
+  DDRD &= ~(1 << 2); // Ensure PD2 is input
 
   while (1)
   {
-    if (~PIND & (1<<2))
+    if (PIND & (1<<2))
     {
       PORTD |= (1 << 3);
     }
