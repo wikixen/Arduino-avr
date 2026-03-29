@@ -6,11 +6,11 @@
 
 int main(void) {
   // Set Pin 3 as output
-  DDRD |= (1 << 3);
+  DDRD |= (1 << PD3);
 
   while (1)
   {
     _delay_ms(500);
-    PORTD ^= (1 << 3);
+    PORTD ^= (1 << PD3);
   }
 }

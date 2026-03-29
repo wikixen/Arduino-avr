@@ -6,24 +6,24 @@
 #include <util/delay.h>
 #include <avr/io.h>
 
-int main(void) {
-  // Sets PD3, PD4 & PD5 as outputs 
-  DDRD |= (1 << 3) | (1 << 4) | (1 << 5);
-  
-  DDRD &= ~(1 << 2); // Ensures PD2 is an input
+int main(void)
+{
+  // Sets PD3, PD4 & PD5 as outputs
+  DDRD |= (1 << PD3) | (1 << PD4) | (1 << PD5);
+
+  DDRD &= ~(1 << PD2); // Ensures PD2 is an input
 
   while (1)
   {
-    if (PIND & (1<<2))
+    if (PIND & (1 << PIND2))
     {
-      PORTD |= (1 << 5);
-      PORTD &= ~((1 << 3) | (1 << 4));
+      PORTD |= (1 << PORTD5);
+      PORTD &= ~((1 << PORTD3) | (1 << PORTD4));
     }
-    else 
+    else
     {
-      PORTD |= (1 << 3) | (1 << 4);
-      PORTD &= ~(1 << 5);
+      PORTD |= (1 << PORTD3) | (1 << PORTD4);
+      PORTD &= ~(1 << PORTD5);
     }
   }
-  
 }
