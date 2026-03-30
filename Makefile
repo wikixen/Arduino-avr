@@ -1,5 +1,5 @@
 # Swap filename before use
-FILE=switch
+FILE=loveometer
 
 default:
 	avr-gcc -Os -DF_CPU=16000000UL -mmcu=atmega328p -c -o build/$(FILE).o src/$(FILE).c
