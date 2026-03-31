@@ -11,6 +11,6 @@ int main(void) {
   while (1)
   {
     _delay_ms(500);
-    PORTD ^= (1 << PD3);
+    PORTD ^= (1 << PORTD3);
   }
 }
