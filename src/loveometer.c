@@ -4,8 +4,36 @@
  * This data is then sent to the connected PC via UART
  */
 #include <avr/io.h>
+#include <stdio.h>
 
+#define F_CPU 16000000UL
+#define BAUD 9600
+#define MYUBRR (F_CPU / 16 / BAUD - 1)
+
+int uart_put_char(char c, FILE * stream);
+void init_uart();
 void init_adc();
+
+int uart_put_char(char c, FILE *stream)
+{
+  if (c == '\n')
+  {
+    uart_put_char('\r', stream);
+  }
+  while (!(UCSR0A & (1 << UDRE0)));
+  UDR0 = c;
+  return 0;
+}
+
+FILE uart_output = FDEV_SETUP_STREAM(uart_put_char, NULL, _FDEV_SETUP_WRITE);
+
+void init_uart()
+{
+  UBRR0H = (unsigned char)(MYUBRR >> 8);
+  UBRR0L = (unsigned char)MYUBRR;
+  UCSR0B = (1 << TXEN0);
+  stdout = &uart_output;
+}
 
 void init_adc()
 {
@@ -20,6 +48,7 @@ void init_adc()
 
 int main()
 {
+  init_uart();
   init_adc();
 
   uint16_t ADCValue = 0;
@@ -39,8 +68,11 @@ int main()
     float voltage = ((float)ADCValue / 1024.0) * 5.0;
     float temp = (voltage - .5) * 100.0;
 
+    // printf("Voltage: %d\tTemp:%d\n", (int)voltage, (int)temp);
+    printf("Testing\n");
+
     // Turn LEDs on if temp is less than 29 Celsius
-    if (temp > baselineTemp)
+    if (temp < baselineTemp)
     {
       PORTD |= (1 << PORTD2) | (1 << PORTD3) | (1 << PORTD4);
     }
