@@ -5,6 +5,7 @@
  */
 #include <avr/io.h>
 #include <stdio.h>
+#include <util/delay.h>
 
 #define F_CPU 16000000UL
 #define BAUD 9600
@@ -50,14 +51,14 @@ int main()
 {
   init_uart();
   init_adc();
-
+  
   uint16_t ADCValue = 0;
 
   // D[2:4]: Sets Pins 2,3,4 as outputs
   DDRD |= (1 << PD4) | (1 << PD3) | (1 << PD2);                    
 
   // Change this number to the temp in your room to see change
-  float baselineTemp = 29; // It was hot in my room when I coded this
+  float baselineTemp = 27; // It was hot in my room when I coded this
   
   while (1)
   {
@@ -68,11 +69,11 @@ int main()
     float voltage = ((float)ADCValue / 1024.0) * 5.0;
     float temp = (voltage - .5) * 100.0;
 
-    // printf("Voltage: %d\tTemp:%d\n", (int)voltage, (int)temp);
-    printf("Testing\n");
+    printf("Voltage: %dV\tTemp:%dC\n", (int)voltage, (int)temp);
+    _delay_ms(200);
 
     // Turn LEDs on if temp is less than 29 Celsius
-    if (temp < baselineTemp)
+    if (temp > baselineTemp)
     {
       PORTD |= (1 << PORTD2) | (1 << PORTD3) | (1 << PORTD4);
     }
