@@ -7,9 +7,9 @@
 #include <stdio.h>
 #include <util/delay.h>
 
-#define F_CPU 16000000UL
+#define F_CPU 16000000UL //Run chip at 16_000_000 cycles per sec
 #define BAUD 9600
-#define MYUBRR (F_CPU / 16 / BAUD - 1)
+#define MYUBRR (F_CPU / 16 / BAUD - 1) // Formula from datasheet to calc UBBR value
 
 int uart_put_char(char c, FILE * stream);
 void init_uart();
@@ -17,23 +17,30 @@ void init_adc();
 
 int uart_put_char(char c, FILE *stream)
 {
+  // Sends cursor back to the left on each newline
   if (c == '\n')
   {
-    uart_put_char('\r', stream);
+    uart_put_char('\r', stream); 
   }
-  while (!(UCSR0A & (1 << UDRE0)));
+
+  // If UART data register is full, CPU wait here, else send new data 
+  loop_until_bit_is_set(UCSR0A, UDRE0); 
   UDR0 = c;
   return 0;
 }
 
+/**
+ * Necessary to use printf
+ * Since MCU has no OS, it can't run printf so whenever printf is called it sends string through provided func(uart_put_char) instead
+ */
 FILE uart_output = FDEV_SETUP_STREAM(uart_put_char, NULL, _FDEV_SETUP_WRITE);
 
 void init_uart()
 {
-  UBRR0H = (unsigned char)(MYUBRR >> 8);
+  UBRR0H = (unsigned char)(MYUBRR >> 8); 
   UBRR0L = (unsigned char)MYUBRR;
-  UCSR0B = (1 << TXEN0);
-  stdout = &uart_output;
+  UCSR0B = (1 << TXEN0); //Enable transmission
+  stdout = &uart_output; // When printf is called, sends data uart_output instead
 }
 
 void init_adc()
