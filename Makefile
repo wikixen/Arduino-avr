@@ -1,5 +1,5 @@
 # Swap filename before use
-FILE=loveometer
+FILE=uart_calc
 
 LDFLAGS = -Wl,-u,vfprintf -lprintf_flt -lm
 
